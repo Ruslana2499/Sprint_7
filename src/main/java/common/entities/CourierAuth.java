@@ -1,15 +1,21 @@
-public class Courier {
+package common.entities;
+
+public class CourierAuth {
+
     private String login;
     private String password;
-    private String firstName;
 
-    public Courier(String login, String password, String firstName) {
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
+    public CourierAuth(Courier courier) {
+        this.login = courier.getLogin();
+        this.password = courier.getPassword();
     }
 
-    public Courier() {
+    public CourierAuth(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public CourierAuth() {
     }
 
     public String getLogin() {
@@ -27,13 +33,4 @@ public class Courier {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
 }

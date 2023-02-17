@@ -1,3 +1,4 @@
+import common.constants.Constants;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import org.junit.Before;
@@ -10,14 +11,14 @@ public class ListOrdersTests {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = Constants.resourceUrl + "/api/v1/orders";
+        RestAssured.baseURI = Constants.RESOURCE_URL + "/api/v1/orders";
     }
 
     @Test
     @DisplayName("В тело ответа возвращается список заказов")
     public void listOrders() {
         given()
-                .auth().oauth2(Constants.bearerToken)
+                .auth().oauth2(Constants.BEARER_TOKEN)
                 .get()
                 .then().assertThat().body("orders", notNullValue());
     }

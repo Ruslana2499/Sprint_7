@@ -1,3 +1,5 @@
+package common.entities;
+
 public class IdResult {
     private int id;
 

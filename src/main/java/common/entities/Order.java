@@ -1,3 +1,5 @@
+package common.entities;
+
 public class Order {
     private String firstName;
     private String lastName;
