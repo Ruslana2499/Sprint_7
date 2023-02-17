@@ -1,16 +1,12 @@
 import api.client.CourierClient;
 import common.constants.Constants;
 import common.entities.Courier;
-import common.entities.CourierAuth;
-import common.entities.IdResult;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class CourierCreatingTests {
@@ -18,14 +14,13 @@ public class CourierCreatingTests {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = Constants.RESOURCE_URL + "/api/v1/courier";
+        RestAssured.baseURI = Constants.RESOURCE_URL;
     }
 
     @After
     public void cleanUp() {
-        RestAssured.baseURI = Constants.RESOURCE_URL;
         apiCourier.deleteCourier(Constants.COURIER);
-        }
+    }
 
     @Test
     @DisplayName("Курьера можно создать")
@@ -47,7 +42,7 @@ public class CourierCreatingTests {
     @DisplayName("Нельзя создать курьера без логина")
     public void courierCreatingWithoutLogin() {
         Courier courier = new Courier("", "pes2,5", "Stewie");
-        apiCourier.createCourier(Constants.COURIER)
+        apiCourier.createCourier(courier)
                 .then().statusCode(400);
     }
 
@@ -55,7 +50,7 @@ public class CourierCreatingTests {
     @DisplayName("Нельзя создать курьера без пароля")
     public void courierCreatingWithoutPassword() {
         Courier courier = new Courier("kuslo", "", "Stewie");
-        apiCourier.createCourier(Constants.COURIER)
+        apiCourier.createCourier(courier)
                 .then().statusCode(400);
     }
 
@@ -70,7 +65,7 @@ public class CourierCreatingTests {
     @DisplayName("Если одного из полей нет, запрос возвращает ошибку;")
     public void courierCreatingWithoutLoginHasErrorMessage() {
         Courier courier = new Courier("", "pes2,5", "Stewie");
-        apiCourier.createCourier(Constants.COURIER)
+        apiCourier.createCourier(courier)
                 .then().statusCode(400).and().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 

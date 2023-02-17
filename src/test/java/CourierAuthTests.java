@@ -1,15 +1,12 @@
 import api.client.CourierClient;
 import common.constants.Constants;
 import common.entities.CourierAuth;
-import common.entities.IdResult;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -24,7 +21,6 @@ public class CourierAuthTests {
 
     @AfterClass
     public static void cleanUp() {
-        RestAssured.baseURI = Constants.RESOURCE_URL;
         apiCourier.deleteCourier(Constants.COURIER);
     }
 
@@ -65,7 +61,7 @@ public class CourierAuthTests {
     public void authWithoutLoginHasErrorMessage() {
         CourierAuth courierAuth = new CourierAuth("", "1234");
         apiCourier.authCourier(courierAuth)
-                .then().statusCode(404).and().assertThat().body("message", equalTo("Недостаточно данных для входа"));
+                .then().statusCode(400).and().assertThat().body("message", equalTo("Недостаточно данных для входа"));
     }
 
     @Test
@@ -73,7 +69,7 @@ public class CourierAuthTests {
     public void authWithoutPasswordHasErrorMessage() {
         CourierAuth courierAuth = new CourierAuth("1234", "");
         apiCourier.authCourier(courierAuth)
-                .then().statusCode(404).and().assertThat().body("message", equalTo("Недостаточно данных для входа"));
+                .then().statusCode(400).and().assertThat().body("message", equalTo("Недостаточно данных для входа"));
     }
 
     @Test
@@ -81,7 +77,7 @@ public class CourierAuthTests {
     public void passwordEnteredIncorrectlyHasErrorMessage() {
         CourierAuth courierAuth = new CourierAuth("kuslo", "1234");
         apiCourier.authCourier(courierAuth)
-                .then().statusCode(400).and().assertThat().body("message", equalTo("Учетная запись не найдена"));
+                .then().statusCode(404).and().assertThat().body("message", equalTo("Учетная запись не найдена"));
     }
 
     @Test
