@@ -1,0 +1,11 @@
+/.idea
+/.allure
+
+!target/
+target/*
+!target/allure-results/
+target/allure-results/*
+!target/allure-results/*-result.json
+!target/surefire-reports/
+target/surefire-reports/*
+!target/surefire-reports/*
